@@ -1,3 +1,5 @@
+addBookBtn = document.querySelector("#addBook")
+
 const myLibrary = [];
 
 function Book(title, author, pages, readStatus) {
@@ -7,6 +9,10 @@ function Book(title, author, pages, readStatus) {
     this.readStatus = readStatus;
 
     this.id = crypto.randomUUID();
+}
+
+function createBook() {
+    const newBook = document.createElement("div")
 }
 
 function addBookToLibrary(title, author, pages, readStatus) {
@@ -19,4 +25,25 @@ function addBookToLibrary(title, author, pages, readStatus) {
     myLibrary.push(book2);
     */
 }
+
+addBookBtn.addEventListener('click', () => {
+    myLibrary.forEach((book) => {
+        console.log(book);
+    }
+)
+}) 
+
+/* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+function openNav() {
+  document.getElementById("mySidenav").style.width = "350px";
+  document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.body.style.backgroundColor = "antiquewhite";
+}
+
+
 
