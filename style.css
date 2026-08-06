@@ -91,6 +91,12 @@ header a {
     object-fit: cover;
 }
 
+.card h1 {
+    font-size: 150px;
+    line-height: 150px; /* This make it align to center somehow */
+
+}
+
 .card h3, .card p {
     margin: 10px 0;
 }
