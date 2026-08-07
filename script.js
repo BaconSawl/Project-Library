@@ -1,6 +1,8 @@
-addBookBtn = document.querySelector("#addBook")
+const addBookBtn = document.querySelector("#addBook")
 
-const myLibrary = [];
+const myLibrary = [
+
+];
 
 function Book(title, author, pages, readStatus) {
     this.title = title;
@@ -11,9 +13,6 @@ function Book(title, author, pages, readStatus) {
     this.id = crypto.randomUUID();
 }
 
-function createBook() {
-    const newBook = document.createElement("div")
-}
 
 function addBookToLibrary(title, author, pages, readStatus) {
     const book = new Book(title, author, pages, readStatus);
@@ -26,12 +25,59 @@ function addBookToLibrary(title, author, pages, readStatus) {
     */
 }
 
+/// TS is so ASS!!!! Need to fix TS NOW!
+function addBookCard(book) {
+    const { title, author, pages, readStatus, id} = book; /// Much better than write addBookCard(title, author, pages, readStatus)
+
+    const container = document.querySelector(".container")
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const img = document.createElement("img");
+    img.src = "#";
+
+    const card_content = document.createElement("div");
+    card_content.className = "card-content";
+
+    const h3 = document.createElement("h3");
+    h3.textContent = title;
+
+    const p_author = document.createElement("p");
+    const p_pages = document.createElement("p");
+    const p_readStatus = document.createElement("p");
+
+    const strong_author = document.createElement("strong");
+    strong_author.textContent = author;
+
+    const strong_pages = document.createElement("strong");
+    strong_pages.textContent = pages;
+
+    const strong_readStatus = document.createElement("strong");
+    strong_readStatus.textContent = "Read Status: ";
+    
+    p_author.appendChild(strong_author);
+    p_pages.appendChild(strong_pages);
+    p_readStatus.appendChild(strong_readStatus)
+    p_readStatus.appendChild(document.createTextNode(readStatus))
+    
+    card_content.append(h3, p_author, p_pages);
+    card.append(img, card_content, p_readStatus);
+    card.setAttribute("data-id", id);
+
+    return container.appendChild(card);
+}
+
+
 addBookBtn.addEventListener('click', () => {
     myLibrary.forEach((book) => {
         console.log(book);
     }
 )
-}) 
+})
+
+
+
 
 /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
 function openNav() {
