@@ -73,7 +73,8 @@ function addBookCard(book) {
 
 function displayBooks() {
     const container = document.querySelector(".container")
-
+    container.replaceChildren();
+    container.appendChild(addBookBtn);
     myLibrary.forEach((book) => {
         container.append(addBookCard(book));
     })
