@@ -7,13 +7,12 @@ const myLibrary = [
 
 ];
 
-function Book(cover = "./assets/placeholderCover.jpg", title, author, pages, readStatus) {
-    this.cover = cover;
+function Book(title, author, pages, readStatus, cover = "./assets/placeholderCover.jpg", ) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.readStatus = readStatus;
-
+    this.cover = cover;
     this.id = crypto.randomUUID();
 }
 
@@ -21,13 +20,32 @@ function Book(cover = "./assets/placeholderCover.jpg", title, author, pages, rea
 function addBookToLibrary(title, author, pages, readStatus) {
     const book = new Book(title, author, pages, readStatus); /// Form will be used for this laterrr
     myLibrary.push(book);
-    /*
-    const book1 = new Book("With Our Backs to the Wall: Victory and Defeat in 1918", "David Stevenson", "752", "Reading");
-    const book2 = new Book("The Forgotten Soldier", "Guy Sajer", "560", "Reading");
-    myLibrary.push(book1);
-    myLibrary.push(book2);
-    */
 }
+
+function getDataFromForm() {
+    const bookTitle = document.querySelector('#title').value;
+    const bookAuthor = document.querySelector('#author').value;
+    const bookPages = document.querySelector('#pages').value;
+    let readStatus = document.querySelector('#readStatus').checked;
+    if (readStatus) {
+        readStatus = 'Done';
+    } else {
+        readStatus = 'Ongoing';
+    }
+
+    addBookToLibrary(bookTitle, bookAuthor, bookPages, readStatus);
+    displayBooks();
+}
+
+const form = document.querySelector('.form-container')
+form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    getDataFromForm();
+    closeNav();
+    console.log(myLibrary)
+})
+
+
 
 /// TS is so ASS!!!! Need to fix TS NOW!
 function addBookCard(book) {
@@ -73,22 +91,17 @@ function addBookCard(book) {
 
 function displayBooks() {
     const container = document.querySelector(".container")
-    container.replaceChildren();
+    container.replaceChildren(); // Better to use than innerHTML
     container.appendChild(addBookBtn);
     myLibrary.forEach((book) => {
-        container.append(addBookCard(book));
+        container.insertBefore(addBookCard(book), addBookBtn); // This will make sure that the book cards are inserted BEFORE the "add book" card
     })
 }
 
 
 addBookBtn.addEventListener('click', () => {
-    myLibrary.forEach((book) => {
-        console.log(book);
-    }
-)
+    openNav();
 })
-
-
 
 
 
