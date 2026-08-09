@@ -1,11 +1,6 @@
 const addBookBtn = document.querySelector("#addBook")
 
-const myLibrary = [
-    {cover: "./assets/AtomicHabits.jpg" ,title: 'Atomic Habits', author: 'James Clear', pages: '256', readStatus: 'Done', id: '57144c01-741d-4fc7-a856-4432912c7ad2'},
-    {cover: "./assets/1917.jpg" ,title: '1917', author: 'David Stevenson', pages: '430', readStatus: 'Done', id: '7a3f934d-8e34-441e-bd7a-7ac0431aa54e'},
-    {cover: "./assets/ParadiseKiss.jpg" ,title: 'Paradise Kiss', author: 'Ai Yazawa', pages: '858', readStatus: 'Done', id: 'cc8f5e7c-f6e7-4d09-a7f8-01de6b0db76e'},
-
-];
+const myLibrary = [];
 
 function Book(title, author, pages, readStatus, cover = "./assets/placeholderCover.jpg", ) {
     this.title = title;
@@ -17,8 +12,8 @@ function Book(title, author, pages, readStatus, cover = "./assets/placeholderCov
 }
 
 
-function addBookToLibrary(title, author, pages, readStatus) {
-    const book = new Book(title, author, pages, readStatus); /// Form will be used for this laterrr
+function addBookToLibrary(title, author, pages, readStatus, cover) {
+    const book = new Book(title, author, pages, readStatus, cover); /// Form will be used for this laterrr
     myLibrary.push(book);
 }
 
@@ -51,12 +46,28 @@ form.addEventListener('submit', (e) => {
 function addBookCard(book) {
     const { cover, title, author, pages, readStatus, id} = book; /// Much better than write addBookCard(title, author, pages, readStatus)
     // Noteforself: Deconstructing is happening in the function below "myLibrary.forEach((book)"
+    // Note for above: Wjhat the fuck i talking about ????
 
     const card = document.createElement("div");
     card.className = "card";
 
     const img = document.createElement("img");
+    img.className = "imgCover";
     img.src = cover;
+
+    // Why the fuck I write these here for
+    const removeBtn = document.createElement("button");
+    removeBtn.className = "removeBtn";
+    const removeIcon = document.createElement("img");
+    removeIcon.src = "./assets/delete.png";
+    removeIcon.width = 25;
+    removeBtn.addEventListener('click', () => {
+        myLibrary.splice(myLibrary.findIndex(e => e.id === id), 1); // Its "id" , not "data-id" or "book.id" you iditot
+        console.log("DIE");
+        displayBooks();
+    })
+
+    removeBtn.appendChild(removeIcon);
 
     const card_content = document.createElement("div");
     card_content.className = "card-content";
@@ -82,9 +93,11 @@ function addBookCard(book) {
     p_readStatus.appendChild(strong_readStatus)
     p_readStatus.appendChild(document.createTextNode(readStatus))
     
-    card_content.append(h3, p_author, p_pages);
+    card_content.append(removeBtn, h3, p_author, p_pages);
     card.append(img, card_content, p_readStatus);
-    card.setAttribute("data-id", id);
+
+    // card.setAttribute("data-id", id); // Giving each book a unique data attribute
+    // This line is basically useless why did I even set its astrribute for
 
     return card;
 }
@@ -104,17 +117,20 @@ addBookBtn.addEventListener('click', () => {
 })
 
 
-
+// Sidebar stuff
 function openNav() {
   document.getElementById("mySidenav").style.width = "350px";
   document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
-
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
   document.body.style.backgroundColor = "antiquewhite";
 }
 
+// Terrible way to add new books, but fuck that, fix later
+addBookToLibrary('Atomic Habits', 'James Clear', '256', 'Done', './assets/AtomicHabits.jpg');
+addBookToLibrary('1917', 'David Stevenson', '430', 'Done', './assets/1917.jpg');
+addBookToLibrary('Paradise Kiss', 'Ai Yazawa', '858', 'Done', './assets/ParadiseKiss.jpg');
 
 displayBooks()
 

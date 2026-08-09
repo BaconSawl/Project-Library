@@ -60,7 +60,15 @@ header a {
     transition: transform 0.3s ease;
 }
 
-
+.card .removeBtn {
+  position: absolute;
+  right: 0;           /* Pins the button to the right edge */
+  top: 0;  
+  background: transparent;
+  border: none;
+    cursor: pointer;
+  transition: all 0.3s;
+}
 
 .card-content {
   position: absolute;
@@ -86,8 +94,10 @@ header a {
 .card:hover .card-content{
     opacity: 1;
 }
+
+
  
-.card img {
+.card .imgCover {
     display: block;
     height: 300px;
     width: 200px;
@@ -205,7 +215,7 @@ input:focus {
   box-shadow: 4px 4px 0px  #000000;
 }
 
-button {
+button #submit{
   width: 100%;
   padding: 12px;
   background-color: var(--accent);
