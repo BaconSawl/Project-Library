@@ -1,6 +1,6 @@
 const addBookBtn = document.querySelector("#addBook")
 
-const myLibrary = [];
+let myLibrary = [];
 
 function Book(title, author, pages, readStatus, cover = "./assets/placeholderCover.jpg", ) {
     this.title = title;
@@ -11,10 +11,24 @@ function Book(title, author, pages, readStatus, cover = "./assets/placeholderCov
     this.id = crypto.randomUUID();
 }
 
+Book.prototype.changeReadStatus = function () {
+    if (this.readStatus === "Done") {
+        this.readStatus = "Haven't Read";
+    } 
+    else if (this.readStatus === "Haven't Read") {
+        this.readStatus = "Reading";
+    }
+    else {
+        this.readStatus = "Done";
+    }
+    displayBooks();
+}
+
 
 function addBookToLibrary(title, author, pages, readStatus, cover) {
-    const book = new Book(title, author, pages, readStatus, cover); /// Form will be used for this laterrr
+    const book = new Book(title, author, pages, readStatus, cover); /// Form will be used for this laterrr // Edit: What ?
     myLibrary.push(book);
+    localStorage.setItem('books', JSON.stringify(myLibrary));
 }
 
 function getDataFromForm() {
@@ -42,23 +56,23 @@ form.addEventListener('submit', (e) => {
 
 
 
-/// TS is so ASS!!!! Need to fix TS NOW!
+/// TS is so ASS!!!! Need to rewrite TS NOW!
 function addBookCard(book) {
     const { cover, title, author, pages, readStatus, id} = book; /// Much better than write addBookCard(title, author, pages, readStatus)
     // Noteforself: Deconstructing is happening in the function below "myLibrary.forEach((book)"
     // Note for above: Wjhat the fuck i talking about ????
 
-    const card = document.createElement("div");
+    const card = document.createElement('div');
     card.className = "card";
 
-    const img = document.createElement("img");
+    const img = document.createElement('img');
     img.className = "imgCover";
     img.src = cover;
 
     // Why the fuck I write these here for
-    const removeBtn = document.createElement("button");
+    const removeBtn = document.createElement('button');
     removeBtn.className = "removeBtn";
-    const removeIcon = document.createElement("img");
+    const removeIcon = document.createElement('img');
     removeIcon.src = "./assets/delete.png";
     removeIcon.width = 25;
     removeBtn.addEventListener('click', () => {
@@ -66,26 +80,31 @@ function addBookCard(book) {
         console.log("DIE");
         displayBooks();
     })
-
     removeBtn.appendChild(removeIcon);
 
-    const card_content = document.createElement("div");
+
+    const card_content = document.createElement('div');
     card_content.className = "card-content";
 
-    const h3 = document.createElement("h3");
+    const h3 = document.createElement('h3');
     h3.textContent = title;
 
-    const p_author = document.createElement("p");
-    const p_pages = document.createElement("p");
-    const p_readStatus = document.createElement("p");
+    const p_author = document.createElement('p');
+    const p_pages = document.createElement('p');
+    const p_readStatus = document.createElement('p');
 
-    const strong_author = document.createElement("strong");
+    p_readStatus.addEventListener('click', () => {
+        book.changeReadStatus();
+        console.log(book.readStatus);
+    })
+
+    const strong_author = document.createElement('strong');
     strong_author.textContent = author;
 
-    const strong_pages = document.createElement("strong");
+    const strong_pages = document.createElement('strong');
     strong_pages.textContent = pages + " pages";
 
-    const strong_readStatus = document.createElement("strong");
+    const strong_readStatus = document.createElement('strong');
     strong_readStatus.textContent = "Read Status: ";
     
     p_author.appendChild(strong_author);
@@ -128,6 +147,7 @@ function closeNav() {
 }
 
 // Terrible way to add new books, but fuck that, fix later
+
 addBookToLibrary('Atomic Habits', 'James Clear', '256', 'Done', './assets/AtomicHabits.jpg');
 addBookToLibrary('1917', 'David Stevenson', '430', 'Done', './assets/1917.jpg');
 addBookToLibrary('Paradise Kiss', 'Ai Yazawa', '858', 'Done', './assets/ParadiseKiss.jpg');
