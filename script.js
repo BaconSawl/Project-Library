@@ -36,15 +36,15 @@ if (localStorage.getItem('books') === null) {
     addBookToLibrary(
     "Atomic Habits",
     "James Clear",
-    "256",
+    256,
     "Done",
     "./assets/AtomicHabits.jpg",
 );
-    addBookToLibrary("1917", "David Stevenson", "430", "Done", "./assets/1917.jpg");
+    addBookToLibrary("1917", "David Stevenson", 430, "Done", "./assets/1917.jpg");
     addBookToLibrary(
     "Paradise Kiss",
     "Ai Yazawa",
-    "858",
+    858,
     "Done",
     "./assets/ParadiseKiss.jpg",
 );
@@ -71,12 +71,7 @@ function getDataFromForm() {
     const bookTitle = document.querySelector("#title").value;
     const bookAuthor = document.querySelector("#author").value;
     const bookPages = document.querySelector("#pages").value;
-    let readStatusCheck = document.querySelector("#readStatus").checked;
-    if (readStatusCheck) {
-        readStatusCheck = "Done";
-    } else {
-        readStatusCheck = "Ongoing";
-    }
+    let readStatusCheck = document.querySelector("#readStatus").value;
 
     addBookToLibrary(bookTitle, bookAuthor, bookPages, readStatusCheck);
     displayBooks();
@@ -111,8 +106,7 @@ function addBookCard(book) {
     removeIcon.width = 25;
     removeBtn.addEventListener("click", () => {
         myLibrary.splice(
-            myLibrary.findIndex((e) => e.id === id),
-            1,
+            myLibrary.findIndex((e) => e.id === id), 1,
         ); // Its "id" , not "data-id" or "book.id" you iditot
         console.log("DIE");
         saveLibrary();

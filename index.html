@@ -27,11 +27,15 @@
             </div>
             <div class="input-group">
                 <label for="pages">How many pages are in the book ?</label>
-                <input id="pages" type="text" name="pages" autocomplete="off" required>
+                <input id="pages" type="number" name="pages" autocomplete="off" min="1" max="" required>
             </div>
             <div>
                 <label for="readStatus">Have you finished reading it ?</label>
-                <input id="readStatus" type="checkbox">
+                <select id="readStatus" name="readStatus">
+                    <option value="Haven't Read">Haven't Read</option>
+                    <option value="Reading" selected>Reading</option>
+                    <option value="Done">Have Read</option>
+                </select>
             </div>
 
             <button id="submit" type="submit">Submit</button>
