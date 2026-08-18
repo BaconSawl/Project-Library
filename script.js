@@ -67,29 +67,29 @@ function saveLibrary() {
     localStorage.setItem('books', JSON.stringify(myLibrary));
 }
 
+// I procrastinated ts for days just to make it in less than an hour bruh
 async function getDataFromForm() {
     const bookTitle = document.querySelector("#title").value;
     const bookAuthor = document.querySelector("#author").value;
     const bookPages = document.querySelector("#pages").value;
     let readStatusCheck = document.querySelector("#readStatus").value;
-    let coverID = ``;
     try {
-        const response = await fetch(`https://openlibrary.org/search.json?title=${bookTitle}&author=${bookAuthor}`);
-        //const response = await fetch(`https://openlibrary.org/search.json?title=Atomic Habits&author=James Clear`);
+        // I got recommended to use encodeURIComponent. idk why but why not
+        const response = await fetch(`https://openlibrary.org/search.json?title=${encodeURIComponent(bookTitle)}&author=${encodeURIComponent(bookAuthor)}`);
         if (!response.ok) {
             throw new Error("Some error here!"); 
         }
         const data = await response.json();
-        coverID = data.docs[0].cover_i;
+        let coverID = data.docs[0].cover_i;
         console.log(data)
-
+        const coverURL = `https://covers.openlibrary.org/b/id/${coverID}-L.jpg`;
+        addBookToLibrary(bookTitle, bookAuthor, bookPages, readStatusCheck, coverURL);
     } catch (error) {
         console.error(error);
-        alert("Error")
+        alert("Can't fetch book cover.\nEither book's title or/and author is incorrect or API is down.\n Placeholder cover will be used instead");
+        addBookToLibrary(bookTitle, bookAuthor, bookPages, readStatusCheck);
     }
-    const coverURL = `https://covers.openlibrary.org/b/id/${coverID}-L.jpg`;
 
-    addBookToLibrary(bookTitle, bookAuthor, bookPages, readStatusCheck, coverURL);
     displayBooks();
 }
 
