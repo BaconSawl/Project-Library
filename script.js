@@ -67,13 +67,29 @@ function saveLibrary() {
     localStorage.setItem('books', JSON.stringify(myLibrary));
 }
 
-function getDataFromForm() {
+async function getDataFromForm() {
     const bookTitle = document.querySelector("#title").value;
     const bookAuthor = document.querySelector("#author").value;
     const bookPages = document.querySelector("#pages").value;
     let readStatusCheck = document.querySelector("#readStatus").value;
+    let coverID = ``;
+    try {
+        const response = await fetch(`https://openlibrary.org/search.json?title=${bookTitle}&author=${bookAuthor}`);
+        //const response = await fetch(`https://openlibrary.org/search.json?title=Atomic Habits&author=James Clear`);
+        if (!response.ok) {
+            throw new Error("Some error here!"); 
+        }
+        const data = await response.json();
+        coverID = data.docs[0].cover_i;
+        console.log(data)
 
-    addBookToLibrary(bookTitle, bookAuthor, bookPages, readStatusCheck);
+    } catch (error) {
+        console.error(error);
+        alert("Error")
+    }
+    const coverURL = `https://covers.openlibrary.org/b/id/${coverID}-L.jpg`;
+
+    addBookToLibrary(bookTitle, bookAuthor, bookPages, readStatusCheck, coverURL);
     displayBooks();
 }
 
