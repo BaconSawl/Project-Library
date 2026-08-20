@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./node_modules/sweetalert2/dist/sweetalert2.css">
 </head>
 <body>
     <!--
@@ -15,7 +16,7 @@
     -->
 
     <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a class="closebtn">X</a>
         <form class="form-container">
             <div class="input-group">
                 <label for="title">What is the book's title ?</label>
@@ -40,6 +41,7 @@
 
             <button id="submit" type="submit">Submit</button>
         </form>
+        <p style="text-align: center; font-size: 10px; padding-top: 70px" class="random-p">Did you know that the border colors are random every refresh ?</p>
     </div>
 
     <div class="container">
@@ -85,6 +87,6 @@
 
 
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js" defer></script>
 </body>
 </html>
