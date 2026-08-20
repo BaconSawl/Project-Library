@@ -1,4 +1,8 @@
+import { openNav, closeNav} from "./sideBar.js"
+import Swal from './node_modules/sweetalert2/src/sweetalert2.js'
+
 const addBookBtn = document.querySelector("#addBook");
+const closeBtn = document.querySelector(".closebtn")
 
 let myLibrary = [];
 
@@ -86,9 +90,27 @@ async function getDataFromForm() {
         addBookToLibrary(bookTitle, bookAuthor, bookPages, readStatusCheck, coverURL);
     } catch (error) {
         console.error(error);
-        alert("Can't fetch book cover.\nEither book's title or/and author is incorrect or API is down.\n Placeholder cover will be used instead");
-        addBookToLibrary(bookTitle, bookAuthor, bookPages, readStatusCheck);
-    }
+        // the funni stuff
+        Swal.fire({
+            title: "Can't fetch book cover.\nEither book's title or/and author is incorrect or API is down. \n Or you just put in nonsense.....\n Placeholder cover will be used instead!",
+            showDenyButton: true,
+            confirmButtonText: "Okay!",
+            denyButtonText: `No I don't wanna!`,
+            imageWidth: 169,
+            imageHeight: 246,
+            imageUrl: "./assets/omgNatie.gif",
+
+            }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isDenied) Swal.fire({
+                title: "That button does nothing. \n Nothing you can do lol.", 
+                imageWidth: 192, 
+                heightAuto: true, 
+                imageUrl: "./assets/stupidfat.gif"});
+            });        
+            
+            addBookToLibrary(bookTitle, bookAuthor, bookPages, readStatusCheck);
+        }
 
     displayBooks();
 }
@@ -181,15 +203,8 @@ function displayBooks() {
 addBookBtn.addEventListener("click", () => {
     openNav();
 });
-
-// Sidebar stuff
-function openNav() {
-    document.getElementById("mySidenav").style.width = "350px";
-    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-}
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-    document.body.style.backgroundColor = "antiquewhite";
-}
+closeBtn.addEventListener("click", () => {
+    closeNav();
+});
 
 displayBooks();
