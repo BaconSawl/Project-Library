@@ -1,5 +1,5 @@
 import { openNav, closeNav} from "./sideBar.js"
-import Swal from './node_modules/sweetalert2/src/sweetalert2.js'
+import Swal from "./node_modules/sweetalert2/src/sweetalert2.js"
 
 const addBookBtn = document.querySelector("#addBook");
 const closeBtn = document.querySelector(".closebtn")
